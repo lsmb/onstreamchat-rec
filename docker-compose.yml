@@ -1,0 +1,6 @@
+services:
+  chat:
+    image: "dgg-onstreamchat:latest"
+    volumes:
+      - ./recordings:/app/recordings
+
