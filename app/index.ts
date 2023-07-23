@@ -201,8 +201,4 @@ async function main_loop() {
   }
 }
 
-//setInterval(stoperino, 5000);
-setInterval(() => {
-  stream_live = !stream_live
-}, 20000)
 setInterval(main_loop, 500);
