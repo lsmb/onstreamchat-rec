@@ -1,14 +1,25 @@
 {
-  "name": "dgg-chat-recorder",
+  "name": "onstreamchat-rec",
   "version": "1.0.0",
-  "description": "Fuck you August",
+  "description": "A tool for Augustos to make nicer vidyas",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "lsmb",
   "license": "MIT",
   "dependencies": {
+    "date-and-time": "^3.0.2",
+    "puppeteer": "^20.9.0",
+    "puppeteer-screen-recorder": "^2.1.2",
+    "sanitize-filename": "^1.6.3",
     "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/date-and-time": "^0.13.0",
+    "@types/ws": "^8.5.5",
+    "tsc": "^2.0.4",
+    "typescript": "^5.1.6"
   }
 }

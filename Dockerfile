@@ -3,7 +3,9 @@
 FROM node:18-alpine
 WORKDIR /app
 COPY ./app .
-RUN apk add bash xvfb-run ffmpeg chromium xdotool
+RUN apk add chromium
 RUN npm install
+RUN npm install -g typescript
+RUN tsc
 
-CMD ["node", "index.js"]
+CMD ["node", "dist/index.js"]
