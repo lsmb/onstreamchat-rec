@@ -86,13 +86,11 @@ async function startWebsocket() {
   ws.on('message', (data: string) => {
     websocketConnected = true
     const response = JSON.parse(data)
-    debug('Websocket:', response)
 
     if (response.type == "dggApi:streamInfo") {
       const streams: Streams = response.data.streams
       const live = Boolean(streams.twitch || streams.facebook || streams.rumble || streams.kick || streams.youtube?.live)
       const title = getStreamTitle(streams)
-      debug("Streams are:", streams);
       if (stream_live != live) {
         stream_live = live
         file_name = sanitize(title || "")
