@@ -15,11 +15,11 @@ const info = (message: string, ...remaining: any) => {
 const debug = (message: string, ...remaining: any) => {
   const now = new Date();
   const datetime = date.format(now, 'YYYY/MM/DD HH:mm:ss');
-  console.log(`DEBUG | ${datetime} | ${message}`, remaining.length > 0 ? remaining : '')
+  console.debug(`DEBUG | ${datetime} | ${message}`, remaining.length > 0 ? remaining : '')
 }
 
 const error = (message: string) => {
-  console.log(`ERROR | ${message}`)
+  console.error(`ERROR | ${message}`)
 }
 
 let file_name: string = ""
@@ -65,7 +65,7 @@ interface StreamInfo {
 
 let pingTimeout: any;
 async function startWebsocket() {
-  info("Starting WebSocket")
+  debug("Starting WebSocket")
   const ws = new WebSocket('wss://live.destiny.gg');
 
   function heartbeat() {
@@ -152,7 +152,7 @@ async function run_chat() {
 };
 
 let writeStream: any;
-let recorder: PuppeteerScreenRecorder;
+let recorder: PuppeteerScreenRecorder | undefined;
 async function startRecording() {
   info("Starting recording")
   recorder = new PuppeteerScreenRecorder(page, Config);
@@ -169,16 +169,18 @@ async function startRecording() {
 async function stopRecording() {
   info("Stopping recording")
   stopping_recording = true
-  await recorder.stop()
+  await recorder?.stop()
   stream_recording = false
   if (writeStream) {
     writeStream.close()
   }
   stopping_recording = false
+  recorder = undefined;
   info("Stopped recording")
 
 }
 
+let latest_record_duration: string;
 async function main_loop() {
   const canRunChat = Boolean(!chat_running && !chat_starting)
   const canStartRecording = Boolean(chat_running && stream_live && !stream_recording)
@@ -199,6 +201,22 @@ async function main_loop() {
   if (canStopRecording) {
     await stopRecording()
   }
+
+  if (stream_live && recorder) {
+    console.debug("Last record duration:")
+    if (latest_record_duration == recorder.getRecordDuration()) {
+      await stopRecording()
+      await startRecording()
+    } else {
+      latest_record_duration = recorder.getRecordDuration()
+    }
+  } else {
+    await startRecording()
+  }
+
+
+
+
 }
 
-setInterval(main_loop, 500);
+setInterval(main_loop, 5000);
