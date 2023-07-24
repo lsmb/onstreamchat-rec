@@ -178,7 +178,7 @@ async function stopRecording() {
 
 }
 
-let latest_record_duration: string;
+let latest_record_duration: string | undefined = undefined;
 async function main_loop() {
   const canRunChat = Boolean(!chat_running && !chat_starting)
   const canStartRecording = Boolean(chat_running && stream_live && !stream_recording)
@@ -200,15 +200,17 @@ async function main_loop() {
     await stopRecording()
   }
 
+  debug("Recorder:", recorder)
+  debug("Stream live:", stream_live)
   if (stream_live && recorder) {
-    console.debug("Last record duration:")
-    if (latest_record_duration == recorder.getRecordDuration()) {
+    debug("Last record duration:", latest_record_duration)
+    if (latest_record_duration && latest_record_duration == recorder.getRecordDuration()) {
       await stopRecording()
       await startRecording()
     } else {
       latest_record_duration = recorder.getRecordDuration()
     }
-  } else {
+  } else if (chat_running && stream_live && !recorder && !stopping_recording) {
     await startRecording()
   }
 
