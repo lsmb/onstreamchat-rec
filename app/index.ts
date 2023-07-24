@@ -200,8 +200,6 @@ async function main_loop() {
     await stopRecording()
   }
 
-  debug("Recorder:", recorder)
-  debug("Stream live:", stream_live)
   if (stream_live && recorder) {
     debug("Last record duration:", latest_record_duration)
     if (latest_record_duration && latest_record_duration == recorder.getRecordDuration()) {
