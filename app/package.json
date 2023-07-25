@@ -12,14 +12,13 @@
   "dependencies": {
     "date-and-time": "^3.0.2",
     "puppeteer": "^20.9.0",
-    "puppeteer-screen-recorder": "^2.1.2",
     "sanitize-filename": "^1.6.3",
-    "ws": "^8.13.0"
+    "ws": "^8.13.0",
+    "puppeteer-screen-recorder": "file:deps/puppeteer-screen-recorder-2.1.2.tgz"
   },
   "devDependencies": {
     "@types/date-and-time": "^0.13.0",
     "@types/ws": "^8.5.5",
-    "tsc": "^2.0.4",
     "typescript": "^5.1.6"
   }
 }

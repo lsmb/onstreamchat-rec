@@ -126,6 +126,7 @@ const Config: PuppeteerScreenRecorderOptions = {
   videoCodec: 'libx264',
   videoPreset: 'ultrafast',
   videoBitrate: 6000,
+  ffmpegAdditionalOptions: ['-nostdin', '-loglevel error']
 };
 
 let page: Page;
