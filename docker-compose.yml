@@ -2,6 +2,7 @@ services:
   onstreamchat-rec:
     image: "onstreamchat-rec:latest"
     build: .
+    user: 1000:1000
     volumes:
       - ./recordings:/app/recordings
 
