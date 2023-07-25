@@ -200,6 +200,13 @@ async function main_loop() {
     await stopRecording()
   }
 
+
+
+
+
+}
+
+async function bugged_rec_check() {
   if (stream_live && recorder) {
     debug("Last record duration:", latest_record_duration)
     if (latest_record_duration && latest_record_duration == recorder.getRecordDuration()) {
@@ -211,10 +218,8 @@ async function main_loop() {
   } else if (chat_running && stream_live && !recorder && !stopping_recording) {
     await startRecording()
   }
-
-
-
-
 }
+
+setInterval(bugged_rec_check, 60000)
 
 setInterval(main_loop, 5000);
